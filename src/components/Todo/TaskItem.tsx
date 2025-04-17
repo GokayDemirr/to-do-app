@@ -22,7 +22,7 @@ export const TaskItem = ({ task, taskList, setTaskList }: TaskItemProps) => {
   };
 
   return (
-    <li className="flex justify-between items-start max-w-2xl w-full px-4 py-2 border-b">
+    <li className="flex justify-between items-start max-w-3xl w-full px-4 py-2 border-b">
       <div className="flex gap-4 items-start w-full">
         <button
           onClick={() => toggleTaskStatus(task.id)}
@@ -34,7 +34,7 @@ export const TaskItem = ({ task, taskList, setTaskList }: TaskItemProps) => {
         </button>
 
         <span
-          className={`w-full break-words max-w-md ${
+          className={`w-full break-words max-w-xl ${
             task.completed && "line-through"
           }`}
         >

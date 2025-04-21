@@ -1,4 +1,5 @@
 "use client";
+import { saveTaskToDB } from "@/app/lib/actions/saveTaskToDB";
 import { Task } from "@/types";
 import { Plus } from "lucide-react";
 import { useState } from "react";
@@ -11,13 +12,12 @@ interface AddItemProps {
 export const AddItem = ({ taskList, setTaskList }: AddItemProps) => {
   const [task, setTask] = useState<string>("");
 
-  const handleAddTask = (title: string) => {
-    const newTask: Task = {
-      id: Date.now(),
-      title,
-      completed: false,
-    };
-    setTaskList([...taskList, newTask]);
+  const handleAddTask = async (title: string) => {
+    // Task'ı veritabanına kaydediyoruz
+    const savedTask = await saveTaskToDB(title); // Burada ID'yi alıyoruz
+
+    // Yeni task'ı listeye ekliyoruz
+    setTaskList([...taskList, savedTask]);
   };
 
   return (

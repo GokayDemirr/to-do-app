@@ -1,19 +1,28 @@
 import { deleteTasksFromDB } from "@/app/lib/actions/deleteTasksFromDB";
+import { getTasksFromDB } from "@/app/lib/actions/getTasksFromDB";
 import { statusUpdateTask } from "@/app/lib/actions/statusUpdateTask";
 import { Task } from "@/types";
 import { Check, Trash2 } from "lucide-react";
 
 interface TaskItemProps {
   task: Task;
+  setTaskList: React.Dispatch<React.SetStateAction<Task[]>>;
 }
 
-export const TaskItem = ({ task }: TaskItemProps) => {
+export const TaskItem = ({ task, setTaskList }: TaskItemProps) => {
+  const fetchTasks = async () => {
+    const tasks = await getTasksFromDB();
+    setTaskList(tasks);
+  };
+
   const toggleTaskStatus = (id: number) => {
     statusUpdateTask(id);
+    fetchTasks();
   };
 
   const handleDeleteTask = (id: number) => {
     deleteTasksFromDB(id);
+    fetchTasks();
   };
 
   return (
@@ -38,7 +47,7 @@ export const TaskItem = ({ task }: TaskItemProps) => {
       </div>
 
       <button
-        onClick={handleDeleteTask}
+        onClick={() => handleDeleteTask(task.id)}
         className="ml-4 mt-1 cursor-pointer hover:scale-110 transition-all duration-150"
       >
         <Trash2 width={24} />

@@ -8,11 +8,6 @@ interface TaskListProps {
 
 export const TaskList = ({ taskList, setTaskList }: TaskListProps) => {
   return taskList.map((task: Task) => (
-    <TaskItem
-      task={task}
-      taskList={taskList}
-      setTaskList={setTaskList}
-      key={task.id}
-    />
+    <TaskItem task={task} key={task.id} setTaskList={setTaskList} />
   ));
 };
